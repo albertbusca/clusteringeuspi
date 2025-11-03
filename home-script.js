@@ -190,6 +190,8 @@ function createChart(feature) {
             categoryarray: propertyNames.reverse(),
             showticklabels: false,
         },
+        bargap: 0.1,
+        // height: propertyNames.length * 25,
         dragmode: false,
         responsive: true,
     };
@@ -241,9 +243,11 @@ document.getElementById('regionLink').addEventListener('click', function () {
     window.location.href = 'regionPage3.html?region=AT11'
 })
 
+/*
 document.getElementById('buttonRegCTA').addEventListener('click', function () {
     window.location.href = 'regionPage3.html?region=AT11'
 })
+*/
 
 fetchNutsData().then(data => {
     const firstFeature = data.features[0];
@@ -272,27 +276,25 @@ d3.csv("data/cluster_mean.csv").then(data => {
     const cluster2 = data.map(row => row["Cluster 2"]).map(Number);
 
     const trace1 = {
-        x: cluster1,
-        y: components,
+        x: components,
+        y: cluster1,
         type: 'bar',
         textposition: 'auto',
-        hovertext: components,
+        hovertext: cluster1,
         hoverinfo: 'text',
         marker: { color: '#FE6162' },
         name: 'Cluster 1',
-        orientation: 'h',
     };
 
     const trace2 = {
-        x: cluster2,
-        y: components,
+        x: components,
+        y: cluster2,
         type: 'bar',
         textposition: 'auto',
-        hovertext: components,
+        hovertext: cluster2,
         hoverinfo: 'text',
         marker: { color: '#6467FE' },
         name: 'Cluster 2',
-        orientation: 'h',
     };
 
     const dataChart = [trace1, trace2];
@@ -302,16 +304,9 @@ d3.csv("data/cluster_mean.csv").then(data => {
         paper_bgcolor: "rgba(0,0,0,0)",
         font: { family: 'Source Sans 3' },
         margin: {
-            b: 20,
+            b: 110,
             l: 20,
-            r: 20,
-            t: 20,
-        },
-        yaxis: {
-            type: 'category',
-            categoryorder: 'array',
-            categoryarray: components.reverse(),
-            showticklabels: false,
+            r: 130,
         },
         dragmode: false,
         showlegend: false,
@@ -527,33 +522,46 @@ function highLightRegion(value, n) {
 });
 
 function adjustHeight() {
-    const vector4 = parseFloat(window.getComputedStyle(document.getElementById("vector4")).height);
-    const vector5 = parseFloat(window.getComputedStyle(document.getElementById("vector5")).height);
+    const vector1 = parseFloat(window.getComputedStyle(document.getElementById("vector1")).height);
+    const vector2 = parseFloat(window.getComputedStyle(document.getElementById("vector2")).height);
     const section = parseFloat(window.getComputedStyle(document.getElementById("heroSection")).height);
+    const heroBg = parseFloat(window.getComputedStyle(document.getElementById("heroBackground")).height);
+    const textHero = parseFloat(window.getComputedStyle(document.getElementById("textHero")).height);
     const targetElement = document.getElementById("heroBuffer");
-    console.log(vector4, vector5, section)
-    let targetHeight = section - ((vector4 * 0.75) + vector5);
+    let targetHeight = section - ((vector1 * 0.6) + vector2);
+    console.log("Vector 1 is", vector1, "Vector 2 is", vector2, "Section is", section)
     console.log(targetHeight)
     if (targetHeight < 0) { targetElement.style.height = 0 + "px"; }
     else { targetElement.style.height = (targetHeight + 20) + "px"; }
 
-    document.getElementById("sectionBuffer").style.height = vector4 * 0.30 + "px";
+    console.log("HeroBG:", heroBg);
+    document.getElementById("sectionBuffer").style.height = heroBg - (textHero * 1.5) + "px";
 }
 
 // Run once on initiation
-adjustHeight();
+//adjustHeight();
 
 // Update on window resize
 window.addEventListener("resize", () => {
-    adjustHeight();
+    //adjustHeight();
     Plotly.Plots.resize('barChartCluster');
     Plotly.Plots.resize('boxPlotCluster');
+    Plotly.Plots.resize('barChartRegion');
 });
 
-document.getElementById('buttonCB').onclick = function() {
-    document.getElementById('control').style.zIndex = 10;
-};
+let lastScrollY = window.scrollY;
+const header = document.querySelector("header");
+const threshold = 10;
 
-document.getElementById('close').onclick = function() {
-    document.getElementById('control').style.zIndex = -10;
-};
+window.addEventListener("scroll", () => {
+  const currentY = window.scrollY;
+  if (Math.abs(currentY - lastScrollY) < threshold) return;
+
+  if (currentY > lastScrollY) {
+    header.classList.add("hide");
+  } else {
+    header.classList.remove("hide");
+  }
+
+  lastScrollY = currentY;
+});

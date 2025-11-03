@@ -27,8 +27,8 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-    <!-- Local  -->
-    <script type="module" src="app4.js" async></script>
+    <!-- Local -->
+    <script type="module" src="home-script.js" async></script>
     <link rel="stylesheet" href="styles.css">
 
     <!--Google Fonts-->
@@ -39,47 +39,70 @@
         rel="stylesheet">
 </head>
 
-<body style="margin: 0;">
+<body style="margin: 0">
     <header role="banner">
-        <h1>Clustering EU-SPI</h1>
-        <p>By Albert Busca</p>
+        <img src="assets/logo-euspi.svg" alt="EU-SPI Logo" id="logoEUSPI">
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="clustering.html">Regions</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
     </header>
-    <nav role="navigation">
-        <a href="#heroSection" class="navLink">Introduction</a>
-        <a href="#mapSection" class="navLink">Map</a>
-        <a href="#clusterGraphs" class="navLink">Cluster Charts</a>
-    </nav>
     <section id="heroSection">
-        <img src="assets/bg-image.jpg" id="bg-image">
-        <div id="heroBackground">
-            <img src="assets/Vector 1.svg" id="vector1" class="vector">
-            <div id="heroBuffer"></div>
-            <img src="assets/Vector 2.svg" id="vector2" class="vector">
+        <div id="bg-image">
+            <img src="assets/bg-image.jpg">
         </div>
-        <div id="textHero">
-            <h1 id="titleHero">EU-SPI Interactive Tools</h1>
-            <p id="parHero">Fostering data-driven decision for public policy makers and stakeholders</p>
-            <h1 id="titleHeroSection">About this page</h1>
-            <p id="parHeroSection">Scroll down to find various interactive tools based on the European Social Progress
-                Index
-                by the European Commission. This tools and data are the result of a published paper authored by Albert
-                Busca
-                and Albert Carreras that can be found here. We believe this page can be useful in understanding the
-                findings
-                of the paper and to inform public policies with data, alongside helping to see social progress in a more
-                holistic manner.</p>
+        <div id="hero-content">
+            <img src="assets/vector-hero-top.svg" id="vector1" class="vector">
+            <div id="hero-text">
+                <h1>EU–SPI Interactive Tools</h1>
+                <p>
+                    Create <strong>data-driven</strong> decisions. Go beyond GDP by focusing on social progress.
+                    For <strong>public policy makers</strong>, <strong>stakeholders</strong> and
+                    <strong>researchers</strong>.
+                </p>
+                <button class="buttonCTA">Get Started</button>
+            </div>
+            <div id="heroBuffer"></div>
+
+            <img src="assets/vector-hero-bot.svg" id="vector2" class="vector">
         </div>
     </section>
-    <section>
-        <div id="sectionBuffer"></div>
-        <h1 class="sectionTitle" id="mapSection">Interactive Map</h1>
-        <div class="sectionLine"></div>
-        <p style="margin-left: 2.5%;">Select a region by clicking it on the map or change the variable to display. Click
-            on the button at the bottom of the control bar to know more information about the selected region.</p>
-        <div class="chartBox" id="controlMap">
-            <div id="map" role="application" aria-label="Interactive EU-SPI map at NUTS-2"></div>
-            <aside class="control" aria-labelledby="titleCB">
-                <h1 class="titleCB">Control Bar</h1>
+    <section id="description">
+        <div>
+            <img src="assets/eu-background.png" id="eu-background">
+            <div id="description-content">
+                <h1>Get the insights you need</h1>
+                <p>
+                    In this page you will find various interactive tools that
+                    use the <strong>European Social Porgress Index</strong> from
+                    the European Commission. This is ther result of a published paper
+                    authored by Albert Busca and Albert Carreras.
+                </p>
+            </div>
+        </div>
+    </section>
+    <section id="euspi-map">
+        <div class="section-header">
+            <h1>Interactive Map</h1>
+        </div>
+        <div id="map-and-control">
+            <div id="map"></div>
+            <aside id="control-bar">
+                <div id="button-panel">
+                    <button>
+                        <img src="assets/info-button.svg">
+                    </button>
+                    <button>
+                        <img src="assets/close-button.svg">
+                    </button>
+                </div>
+                <div id="region-graph">
+                    <p id="barChartTitle">EU-SPI values for Burgenland:</p>
+                    <div id="barChartRegion"></div>
+                </div>
                 <select id="selectCB">
                     <optgroup label="Cluster Analysis">
                         <option value="cluster">Cluster Membership</option>
@@ -105,41 +128,40 @@
                         <option value="Access.to.Advanced.Education">Access to Advanced Education</option>
                     </optgroup>
                 </select>
-                <p class="pCB" id="barChartTitle">Component values for Burgenland</p>
-                <div id="barChartRegion"></div>
-                <p class="pCB">Legend:</p>
                 <div id="legendMap"></div>
-                <button id="regionLink">Detailed information for AT11</button>
+                <button id="regionLink">Learn more about AT11</button>
             </aside>
         </div>
     </section>
-    <div class="sectionBreak" id="clusterGraphs">
-        <h1>Cluster Profile</h1>
-    </div>
-    <section>
-        <h1 class="sectionTitle">Mean values by component</h1>
-        <div class="sectionLine"></div>
-        <div class="chartBox">
-            <div id="barChartCluster"></div>
-            <aside id="BCClegend">
-                <div class="legendCat">
-                    <div class="legendBox" style="background-color: #FE6162;"></div>
-                    <p>Cluster 1</p>
-                </div>
-                <div class="legendCat">
-                    <div class="legendBox" style="background-color: #6467FE;"></div>
-                    <p>Cluster 2</p>
-                </div>
-            </aside>
+    <section id="cluster-profile">
+        <div class="section-header">
+            <h1>Cluster Profiles</h1>
         </div>
-    </section>
-    <section>
-        <h1 class="sectionTitle" id="boxPlotTitle">Distribution of Health (Factor 1) by Cluster</h1>
-        <div class="sectionLine"></div>
-        <div class="chartBox">
-            <div id="boxPlotCluster"></div>
-            <aside class="control">
-                <h1 class="titleCB">Control Bar</h1>
+        <div id="static-profile">
+            <h1>The first cluster is the most socially advanced half of Europe</h1>
+            <div class="line-break"></div>
+            <p class="subtitle">Mean values of each cluster by EU-SPI Components</p>
+            <div class="chart-box" id="static-profile-chart">
+                <div id="barChartCluster"></div>
+                <aside id="cluster-legend">
+                    <div class="legendCat">
+                        <div class="legendBox" style="background-color: #FE6162;"></div>
+                        <p>Cluster 1</p>
+                    </div>
+                    <div class="legendCat">
+                        <div class="legendBox" style="background-color: #6467FE;"></div>
+                        <p>Cluster 2</p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+        <div id="distribution-plot">
+            <h1>Visualising the disparities within and between clusters</h1>
+            <div class="line-break"></div>
+            <p class="subtitle">Distribution of [Component] by cluster</p>
+            <div class="chart-box">
+                <div id="boxPlotCluster"></div>
+                <aside id="box-plot-controls">
                 <select id="propertySelectBoxPlot">
                     <optgroup label="Factors">
                         <option value="ML1">Health (Factor 1)</option>
@@ -162,7 +184,7 @@
                         <option value="Access to Advanced Education">Access to Advanced Education</option>
                     </optgroup>
                 </select>
-                <fieldset style="width: 100%;">
+                <fieldset>
                     <p style="text-align: center;">Highlighted Regions</p>
                     <div style="display: flex;">
                         <div class="legendBox" style="background-color: #0B39A2;"></div>
@@ -195,62 +217,10 @@
                         </select>
                     </div>
                 </fieldset>
-                <div style="width: 100%;">
-                    <p style="text-align: center;">Legend</p>
-                    <div style="display: flex; gap: 5%; justify-content: center;">
-                        <div class="legendCat">
-                            <div class="legendBox" style="background-color: #FE6162;"></div>
-                            <p class="source-sans-regular">Cluster 1</p>
-                        </div>
-                        <div class="legendCat">
-                            <div class="legendBox" style="background-color: #6467FE;"></div>
-                            <p class="source-sans-regular">Cluster 2</p>
-                        </div>
-                    </div>
-                </div>
             </aside>
+            </div>
         </div>
     </section>
-    <section id="regionalCTA">
-        <img src="assets/region-image.jpg" id="region-image">
-        <div id="bg-color"></div>
-        <img src="assets/Vector 3.svg" id="vector3">
-        <h1 id="titleCTA">Regional Data</h1>
-        <ul class="whiteList">
-            <li>
-                <h2>Detailed insights</h2>
-            </li>
-            <li>
-                <h2>Compare regions</h2>
-            </li>
-            <li>
-                <h2>Understand patterns</h2>
-            </li>
-        </ul>
-        <button class="buttonCTA" id="buttonRegCTA">Go to regional data</button>
-    </section>
-    <footer>
-        <h1>Data Sources:</h1>
-        <ul class="whiteList">
-            <li>
-                <h3>EU-SPI data attributed to the European Commission. Original data can be found
-                    <a href="https://ec.europa.eu/regional_policy/information-sources/maps/social-progress/2020_en"
-                        class="footerLink" target="_blank">here</a> under CC BY 4.0.
-                </h3>
-            </li>
-            <li>
-                <h3>Geographical data attributed to GISCO. Original data can be found
-                    <a href="https://ec.europa.eu/eurostat/web/gisco/geodata/statistical-units/territorial-units-statistics"
-                        class="footerLink" target="_blank">here</a> under CC BY 4.0.
-                </h3>
-            </li>
-            <li>
-                <h3>GDP data attributed to EUROSTAT. Original data can be found <a
-                        href="https://ec.europa.eu/eurostat/databrowser/bookmark/fcac5775-8bd4-4885-ae67-472ae4924f82?lang=en"
-                        class="footerLink" target="_blank">here</a> under CC BT 4.0.</h3>
-            </li>
-        </ul>
-    </footer>
 </body>
 
 </html>
