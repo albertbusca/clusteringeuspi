@@ -6,6 +6,7 @@
     --secondary-color80: #FFD633;
     --tertiary-color: #D4D5D7;
     --tertiary-color40: #A8AAAF;
+    --tertiary-color10: #E9EAEB;
     --font-primary: 'Source Sans 3', sans-serif;
     --font-header: 'Merriweather', serif;
 }
@@ -38,6 +39,7 @@ header {
     top: 0;
     height: 5vw;
     width: 100%;
+    max-width: 100vw;
     box-sizing: border-box;
     background-color: color-mix(in srgb, var(--tertiary-color) 75%, transparent);
     padding-right: 7.5%;
@@ -51,14 +53,14 @@ header {
 }
 
 header.hide {
-  transform: translateY(-100%);
+    transform: translateY(-100%);
 }
 
 #logoEUSPI {
     height: 80%;
 }
 
-nav ul {
+#main-nav ul {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -66,11 +68,66 @@ nav ul {
     gap: 6rem;
 }
 
-nav a {
+#main-nav a {
     font-family: var(--font-header);
     text-decoration: none;
     color: black;
     font-size: clamp(1rem, 2.5vw, 3.2rem);
+}
+
+.nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: black;
+    cursor: pointer;
+}
+
+/* mobile */
+@media (max-width: 768px) {
+    header {
+        justify-content: space-between;
+        height: 10vw;
+    }
+
+    #main-nav {
+        display: none;
+        /* hide links by default */
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: color-mix(in srgb, var(--tertiary-color) 90%, transparent);
+        padding: 0.75rem 1rem;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    #main-nav a {
+        color: black;
+    }
+
+    .nav-toggle {
+        display: block;
+    }
+
+    /* simple open state; toggle .nav-open on header via small JS */
+    header.nav-open #main-nav {
+        display: flex;
+    }
+
+    nav ul {
+        flex-direction: row;
+        justify-content: space-around;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+    }
+
+    nav a {
+        font-size: 1rem;
+        /* fixed, small enough for phones */
+    }
 }
 
 #heroSection {
@@ -100,6 +157,26 @@ nav a {
     object-position: left;
 }
 
+#heroSection .vector-mobile {
+    display: none;
+    position: relative;
+    left: 0;
+    width: 100%;
+    height: fit-content;
+    object-fit: cover;
+    object-position: left;
+}
+
+@media (max-width: 768px) {
+    #heroSection .vector {
+        display: none;
+    }
+
+    #heroSection .vector-mobile {
+        display: block;
+    }
+}
+
 #vector1 {
     top: 0;
     z-index: -1;
@@ -115,6 +192,27 @@ nav a {
     margin-top: -175px;
     width: 520px;
     z-index: 1;
+}
+
+@media (max-width: 768px) {
+    #hero-text {
+        background-color: var(--primary-color160);
+        width: 100%;
+        margin-top: -1px;
+        margin-left: 0;
+        padding-left: 10px;
+        padding-right: 10px;
+        box-sizing: border-box;
+    }
+
+    #hero-text h1 {
+        margin-top: 0;
+        width: 70%;
+    }
+
+    #heroSection {
+        top: -15vh;
+    }
 }
 
 #hero-text p {
@@ -155,7 +253,7 @@ nav a {
     position: relative;
     background-color: var(--secondary-color);
     font-size: clamp(1.5rem, 1.75rem, 2rem);
-    height: clamp(1.7rem, 5rem, 6rem);
+    height: clamp(1.7rem, 4rem, 6rem);
     border-radius: clamp(0.5rem, 2rem, 3rem);
     font-weight: 400;
     min-width: fit-content;
@@ -195,6 +293,13 @@ nav a {
     align-content: center;
 }
 
+@media (max-width: 768px) {
+    #description-content {
+        width: 100%;
+        padding: 1rem;
+    }
+}
+
 #description-content p {
     margin-top: -1rem;
     font-size: clamp(1.2rem, 1.5vw + 0.5rem, 1.25rem);
@@ -230,6 +335,47 @@ nav a {
     height: 100%;
 }
 
+#about-map {
+    position: absolute;
+    margin-top: 5%;
+    margin-left: 15%;
+    background-color: white;
+    min-height: fit-content;
+    width: 35%;
+    ;
+    height: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    border-radius: 5rem;
+    z-index: 500;
+    padding: 2.5%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: black;
+}
+
+#about-map li {
+    font-size: clamp(1rem, 1.2vw + 0.5rem, 1.25rem);
+    color: black;
+}
+
+#about-map button {
+    border: var(--primary-color160) 1px solid;
+    background-color: white;
+    font-size: clamp(1rem, 1.2vw + 0.5rem, 1.25rem);
+    min-height: fit-content;
+    height: 2rem;
+    min-width: fit-content;
+    width: 55%;
+    border-radius: 1rem;
+    margin-top: 2rem;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
 #control-bar {
     width: 30%;
     height: 100%;
@@ -246,14 +392,28 @@ nav a {
     justify-content: end;
 }
 
+#description a {
+    color: black;
+}
+
+#description a:hover {
+    color: var(--primary-color);
+}
+
 #button-panel button {
     background-color: transparent;
     border-radius: 25%;
-    width: min-content;
+    width: 3rem;
     padding: 0;
-    height: min-content;
+    height: 3rem;
     border: none;
     margin: 1rem;
+}
+
+#button-panel img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 #control-bar select {
@@ -323,9 +483,13 @@ select {
     border-radius: 1.2rem;
 }
 
+
 #static-profile {
-    margin-left: 2vw;
-    width: 94vw;
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 0 2rem;
+    /* visual side space */
 }
 
 .line-break {
@@ -344,12 +508,23 @@ select {
 .chart-box {
     width: 100%;
     background-color: var(--tertiary-color);
+    box-sizing: border-box;
     border-radius: 2rem;
     height: 85vh;
     display: flex;
 }
 
 #static-profile-chart {
+    width: 100%;
+    max-width: 1200px;
+    /* max desktop width */
+    margin: 0 auto;
+    /* centers the block */
+    box-sizing: border-box;
+    padding-left: 2rem;
+    /* visual left margin */
+    padding-right: 1rem;
+    /* a bit less on the right if you like */
     flex-direction: column;
 }
 
@@ -375,13 +550,36 @@ select {
 }
 
 #distribution-plot {
-    margin-left: 2vw;
-    width: 94vw;
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 0 2rem;
+    /* visual side space */
 }
 
 #boxPlotCluster {
-    width: 70%;
+    width: 69%;
+    overflow: hidden;
     height: 100%;
+}
+
+#highlighted-regions {
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    padding: 0.5rem 0.5rem 1rem;
+}
+
+#box-plot-controls fieldset>div {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+#box-plot-controls fieldset select {
+    width: auto;
+    flex: 1 1 auto;
+    min-width: 0;
 }
 
 #box-plot-controls {
@@ -392,6 +590,7 @@ select {
     align-items: center;
     justify-content: center;
     border-left: black 2px solid;
+    box-sizing: border-box;
 }
 
 #propertySelectBoxPlot {
@@ -411,4 +610,790 @@ fieldset select {
 #barChartCluster {
     width: 100%;
     height: 85%;
+}
+
+#cluster-profile {
+    width: 100%;
+}
+
+#box-plot-chart-box {
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+#box-plot-frame {
+    width: 70%;
+    height: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.buttonCTA:hover {
+    background-color: var(--secondary-color80);
+    cursor: pointer;
+}
+
+#regionLink:hover {
+    background-color: var(--primary-color40);
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+
+    #cluster-profile h1 {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    #cluster-profile p {
+        font-size: 1.2rem;
+    }
+
+    #barChartCluster {
+        width: 100%;
+    }
+
+    #box-plot-chart-box {
+        flex-direction: column;
+        height: auto;
+        position: relative;
+    }
+
+    #boxPlotCluster {
+        width: 100%;
+        height: 50vh;
+    }
+
+    #propertySelectBoxPlot {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+
+    }
+
+    #box-plot-controls {
+        width: 100%;
+        border: none;
+    }
+
+    #heroSection .vector {
+        width: 100%;
+    }
+
+    #heroBuffer {
+        width: 100%;
+    }
+
+    #eu-background {
+        width: 100%;
+    }
+}
+
+#dashboard {
+    position: relative;
+    width: 100%;
+    margin-top: 10vw;
+    margin-right: 2.5vw;
+}
+
+#region-map {
+    width: 25vw;
+    height: 25vw;
+    border-radius: 30vw;
+    position: absolute;
+    top: 0;
+    left: -7.5vw;
+    border: 2px var(--primary-color160) solid;
+    overflow: hidden;
+    z-index: 0;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+@media (max-width: 768px) {
+    #map-and-control {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: fit-content;
+    }
+
+    #map {
+        width: 100%;
+        height: 60vh;
+    }
+
+    #control-bar {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        border: none;
+    }
+
+    #selectCB {
+        order: -1;
+        position: absolute;
+        top: 0;
+        width: 50%;
+        z-index: 10000;
+    }
+
+    #button-panel {
+        position: absolute;
+        top: -10px;
+        z-index: 10000;
+    }
+
+    #button-panel button {
+        background-color: white;
+        border-radius: 50%;
+    }
+
+    #regionLink {
+        position: absolute;
+        margin-top: -2.75rem;
+        z-index: 10000;
+    }
+}
+
+#region-name {
+    width: 75vw;
+    margin-left: 20vw;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+#name-and-flag {
+    display: flex;
+    align-items: center;
+    min-width: fit-content;
+    width: 70%;
+}
+
+#nuts-id * {
+    margin: 0;
+    text-align: right;
+}
+
+#nuts-id-title {
+    font-family: var(--font-header);
+}
+
+#nutsId {
+    font-weight: 700;
+}
+
+#key-values-section {
+    margin-left: 20vw;
+    width: 75vw;
+}
+
+#key-values-section .line-break {
+    margin: 0;
+}
+
+#key-values {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.peer-section {
+    margin-left: 20vw;
+    margin-top: 2.5%;
+    width: 75vw;
+}
+
+.peer-section button {
+    background-color: var(--tertiary-color10);
+    border: none;
+    min-height: fit-content;
+    height: 2rem;
+    border-radius: 1rem;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.peer-display {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    /* optional */
+    width: 100%;
+}
+
+#gdp-spi-overview {
+    background-color: var(--tertiary-color10);
+    margin-top: 1rem;
+    padding-left: 7.5vw;
+    padding-right: 7.5vw;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#gdp-spi-overview-title {
+    padding-top: 0.5rem;
+    margin-left: 15%;
+    width: 70%;
+    text-align: center;
+}
+
+#gdp-spi-overview-title h1 {
+    font-size: clamp(2rem, 5vw, 2.25rem);
+}
+
+#gdp-spi-overview-title .line-break {
+    margin-top: -0.5rem;
+}
+
+.spi-overview {
+    display: flex;
+    font-size: clamp(1.2rem, 1.5vw + 0.5rem, 1.25rem);
+    padding: 0;
+    gap: 3rem;
+}
+
+.spi-overview ul ul {
+    list-style-type: disc;
+}
+
+#positive-spi {
+    margin-top: 2.5vw;
+}
+
+#negative-spi {
+    justify-content: end;
+}
+
+#negative-spi img {
+    transform: rotate(180deg);
+}
+
+#comparison-charts {
+    padding-left: 7.5vw;
+    padding-right: 7.5vw;
+    width: 100%;
+    box-sizing: border-box;
+    height: 95vh;
+}
+
+#comparison-charts-title {
+    padding-top: 0.5rem;
+    margin-left: 15%;
+    width: 70%;
+    text-align: center;
+}
+
+#chart-menu {
+    display: flex;
+    margin-left: 15%;
+    margin-top: 1rem;
+    width: 70%;
+    border-bottom: var(--tertiary-color) 1px solid;
+    gap: 0;
+}
+
+#chart-menu button {
+    background-color: transparent;
+    border: none;
+    margin-bottom: -1px;
+    font-size: clamp(1.15rem, 1.5vw + 0.5rem, 1.2rem);
+    min-width: fit-content;
+    width: 20%;
+}
+
+.selected {
+    border-bottom: var(--primary-color) 1px solid !important;
+}
+
+#barChart {
+    display: none;
+}
+
+#chartContainer {
+    margin-left: 15%;
+    width: 70%;
+    height: 80%;
+}
+
+#factor-overview {
+    width: 100%;
+    height: 70vh;
+    background-color: var(--tertiary-color10);
+}
+
+#factor-overview-title {
+    padding-top: 0.5rem;
+    margin-left: 15%;
+    width: 70%;
+    text-align: center;
+}
+
+#factor-overview-title p {
+    margin-top: 0.25rem;
+}
+
+#factor-content {
+    margin-top: 1rem;
+    display: flex;
+    padding-left: 3vw;
+    padding-right: 3vw;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#factor-selection {
+    display: grid;
+    width: 30%;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+    height: 25vw;
+}
+
+#factor-selection button {
+    background-color: var(--tertiary-color);
+    border: none;
+    width: 10vw;
+    height: 10vw;
+    border-radius: 1.5vw;
+}
+
+#factor-selection .selection {
+    width: 12.5vw;
+    height: 12.5vw;
+}
+
+#graph-control-factor {
+    display: flex;
+    width: 57.5%;
+    margin-left: 2.5%;
+    height: 25vw;
+    background-color: var(--tertiary-color);
+    border-radius: 1.5vw;
+    margin-bottom: 2.5%;
+}
+
+#factor-graph {
+    width: 50%;
+    height: 100%;
+    border-radius: 1.5vw;
+    overflow: hidden;
+}
+
+#control-factor {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 50%;
+    height: 100%;
+    border-left: black 2px solid;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#factor-and-components {
+    padding: 0;
+    margin: 0;
+    width: 80%;
+}
+
+#factor-and-components li {
+    text-align: left;
+    font-size: clamp(1rem, 1.2vw + 0.5rem, 1.25rem);
+}
+
+#region-data-cta {
+    margin-top: 2rem;
+    width: 100%;
+    height: 700px;
+    position: relative;
+    overflow: hidden;
+}
+
+#vector-region-cta {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 1920px;
+    height: 680px;
+    object-fit: cover;
+    object-position: top left;
+}
+
+#region-bg-img {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+}
+
+#region-bg-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: brightness(90%);
+    position: absolute;
+    z-index: -2;
+    top: 0;
+}
+
+#region-bg-img::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, var(--primary-color160) 40%, transparent);
+    mix-blend-mode: multiply;
+    pointer-events: none;
+}
+
+#regional-cta-content {
+    width: 370px;
+    height: fit-content;
+    position: absolute;
+    top: 180px;
+    left: 130px;
+    margin-left: 5%;
+}
+
+#regional-cta-content h1,
+#regional-cta-content ul {
+    color: white;
+}
+
+
+#regional-cta-content h1 {
+    font-size: 3rem;
+}
+
+#regional-cta-content ul {
+    font-size: 2rem;
+}
+
+#region-vector-frame {
+    width: 100%;
+}
+
+#region-content-frame {
+    width: 100%;
+    height: fit-content;
+}
+
+#pdps {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    padding-left: 7.5vw;
+    padding-right: 7.5vw;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#pdps-title {
+    text-align: center;
+}
+
+#carousel-pdps {
+    margin-top: 1rem;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    box-sizing: border-box;
+}
+
+#carousel-pdps>* {
+    flex: 1 1 0;
+}
+
+#carousel-pdps>*:nth-child(2) {
+    flex: 2 1 0;
+    background-color: var(--tertiary-color10);
+    border-radius: 1rem;
+}
+
+#prev-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    box-sizing: border-box;
+}
+
+#next-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    box-sizing: border-box;
+}
+
+#pdp-prev {
+    background-color: var(--tertiary-color10);
+    border-radius: 1rem;
+}
+
+#pdp-next {
+    background-color: var(--tertiary-color10);
+    border-radius: 1rem;
+}
+
+#carousel-pdps button {
+    background-color: var(--tertiary-color10);
+    border-radius: 1rem;
+    border: none;
+}
+
+#carousel-pdps button:hover {
+    background-color: color-mix(in srgb, var(--primary-color160) 20%, transparent);
+    cursor: pointer;
+}
+
+footer {
+    margin: 0;
+    width: 100%;
+    min-height: fit-content;
+    background-color: var(--primary-color);
+    height: 20vw;
+    display: flex;
+    color: white;
+    justify-content: space-between;
+    padding: 2rem;
+    box-sizing: border-box;
+    gap: 2rem;
+
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+}
+
+#data-sources {
+    height: fit-content;
+}
+
+#nav-footer {
+    height: fit-content;
+}
+
+#data-sources a {
+    color: var(--secondary-color80);
+    text-decoration: underline;
+}
+
+#data-sources a:hover {
+    color: white;
+}
+
+.peer-button:hover {
+    background-color: var(--primary-color40);
+    cursor: pointer;
+}
+
+#about-intro {
+    display: flex;
+    width: 100%;
+    margin-top: 6vw;
+    padding-left: 5rem;
+    padding-right: 5rem;
+    box-sizing: border-box;
+    justify-content: space-evenly;
+}
+
+#euspi-logo {
+    margin-top: 4rem;
+    width: 25%;
+    height: auto;
+}
+
+#euspi-logo img {
+    width: 100%;
+    height: auto;
+}
+
+#intro-content {
+    width: 40%;
+}
+
+#intro-content h1 {
+    text-align: center;
+}
+
+#intro-content a {
+    color: var(--primary-color);
+}
+
+#intro-content a:hover {
+    color: var(--secondary-color);
+}
+
+#about-data {
+    display: flex;
+    width: 100%;
+    margin-top: 6vw;
+    padding-left: 5rem;
+    padding-right: 5rem;
+    box-sizing: border-box;
+    justify-content: end;
+}
+
+#data-content {
+    width: 45%;
+}
+
+#data-content h1 {
+    text-align: center;
+}
+
+#data-content a {
+    color: var(--primary-color);
+}
+
+#data-content a:hover {
+    color: var(--secondary-color);
+}
+
+
+@media (max-width: 768px) {
+    #vector-region-cta {
+        display: none;
+    }
+
+    #regional-cta-content {
+        width: 90%;
+        top: 100px;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-left: 0;
+        padding: 20%;
+        background-color: color-mix(in srgb, var(--primary-color160) 90%, transparent);
+        border-radius: 50%;
+        overflow: hidden;
+    }
+
+    #about-map {
+        width: 90%;
+        height: fit-content;
+        margin-top: 4.5rem;
+        margin-left: 0;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    #region-map {
+        display: none;
+    }
+
+    #region-name,
+    #key-values-section,
+    .peer-section {
+        margin-left: 0;
+        padding-left: 2rem;
+        padding-right: 2rem;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    #regionName {
+        width: 100%;
+    }
+
+    #comparison-charts {
+        min-height: fit-content;
+    }
+
+    .factor-button img {
+        width: 100%;
+        height: auto;
+    }
+
+    #factor-overview {
+        height: fit-content;
+        padding-bottom: 2.5rem;
+    }
+
+    #factor-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #graph-control-factor {
+        width: 90%;
+        height: fit-content;
+        flex-direction: column;
+    }
+
+    #factor-graph {
+        width: 100%;
+        border-radius: 1.5vw;
+        overflow: hidden;
+    }
+
+    #control-factor {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        width: 100%;
+        border-top: black 2px solid;
+        border-left: none;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
+    #pdp-prev,
+    #pdp-next {
+        display: none;
+    }
+
+    #carousel-pdps {
+        flex-direction: column;
+    }
+
+    #carousel-pdps>*:nth-child(2) {
+        width: 100%;
+    }
+
+    footer {
+        flex-direction: column;
+        height: fit-content;
+        align-items: center;
+        text-align: center;
+    }
+
+    #about-intro {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #intro-content {
+        width: 100%;
+    }
+
+    #euspi-logo {
+        width: 40%
+    }
+
+    #about-data {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #data-content {
+        width: 100%;
+    }
 }

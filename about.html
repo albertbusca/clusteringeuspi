@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clustering EU-SPI (About)</title>
+
+    <!-- Local -->
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body style="margin: 0;">
+    <header role="banner">
+        <img src="assets/logo-euspi.svg" alt="EU-SPI Logo" id="logoEUSPI">
+        <button class="nav-toggle" aria-label="Open navigation">☰</button>
+        <nav id="main-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="region-page.html?region=AT11">Regions</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section id="about-intro">
+        <div id="intro-content">
+            <h1>About this page</h1>
+            <div class="line-break"></div>
+            <p>This page is the result of a published paper authored by Albert Busca and Albert Carreras. This webpage
+                shows some of the main insights and results from the paper. It displays some diverse interactive tools
+                that mainly use the EU-SPI data published by the European Commission. You can see the link to the full
+                paper below.</p>
+            <p><a href="https://doi.org/10.38191/iirr-jorr.25.012" target="_blank" rel="noopener noreferrer">
+                    <strong>A core-periphery comeback? Clustering European Union Social Progress Index
+                        (EU-SPI).</strong> Busca & Carreras,
+                    2025. <i>Journal of Regional Research.</i>
+                </a>
+            </p>
+        </div>
+        <div id="euspi-logo">
+            <img src="assets/logo-euspi.svg" alt="EU-SPI Logo">
+        </div>
+    </section>
+    <section id="about-data">
+        <div id="data-content">
+            <h1>About the data</h1>
+            <div class="line-break"></div>
+            <p>This page offers interactive tools reproducing most of the data and figures that can be seen in the
+                paper. However, reading the paper is still recommended to fully understand the results shown here.</p>
+            <p>We believe the EU-SPI is an incredibly powerful tool for policy-makers and researchers. To make working
+                with the index as straightforward as possible, a replication package for R (<a
+                    href="https://github.com/albertbusca/euspir" target="_blank" rel="noopener noreferrer">euspir</a>)
+                is available on
+                Github, which allows you to download the official EU-SPI data published by the European Commission and
+                experiment with the underlying methodology.</p>
+            <p>The official EU-SPI data and documentation from the European Commission can be accessed on their website
+                <a href="https://ec.europa.eu/regional_policy/information-sources/maps/social-progress/2020_en"
+                    target="_blank" rel="noopener noreferrer">here</a>.
+            </p>
+        </div>
+    </section>
+    <footer>
+        <nav id="nav-footer">
+            <h1>EU-SPI Interactive Tools</h1>
+            <ul>
+                <li>
+                    <h2><a href="index.html">Home</a></h2>
+                </li>
+                <li>
+                    <h2><a href="region-page.html?region=AT11">Regional data</a></h2>
+                </li>
+                <li>
+                    <h2><a href="about.html">About this page</a></h2>
+                </li>
+            </ul>
+        </nav>
+        <div id="data-sources">
+            <h1>Data sources</h1>
+            <ul>
+                <li>EU-SPI data attributed to the European Commission. Original data can be found <a
+                        href="https://ec.europa.eu/regional_policy/information-sources/maps/social-progress/2020_en"
+                        target="_blank">here</a>
+                    under CC BY 4.0.</li>
+                <li>Geographical data attributed to GISCO. Original data can be found <a
+                        href="https://ec.europa.eu/eurostat/web/gisco/geodata/statistical-units/territorial-units-statistics"
+                        target="_blank">here</a>
+                    under CC BY 4.0.</li>
+                <li>GDP data attributed to EUROSTAT. Original data can be found <a
+                        href="https://ec.europa.eu/eurostat/databrowser/bookmark/fcac5775-8bd4-4885-ae67-472ae4924f82?lang=en"
+                        target="_blank">here </a>
+                    under CC BT 4.0.</li>
+            </ul>
+        </div>
+    </footer>
+
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const header = document.querySelector('header');
+        const navToggle = document.querySelector('.nav-toggle');
+
+        if (!header || !navToggle) return;
+
+        navToggle.addEventListener('click', () => {
+            header.classList.toggle('nav-open');
+        });
+    });
+</script>
+
+</html>

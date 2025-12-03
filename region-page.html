@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clustering EU-SPI (Regional data)</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <!-- Proj4 and Proj4leaflet -->
+    <script src="libs/proj4.js" defer></script>
+    <script src="libs/proj4leaflet.js" defer></script>
+
+    <!--Plotly-->
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+
+    <!--Local-->
+    <script type="module" src="regionApp3.js" async></script>
+    <link rel="stylesheet" href="styles.css">
+
+    <!--Select2-->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <!--Google Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body style="margin: 0;">
+    <header role="banner">
+        <img src="assets/logo-euspi.svg" alt="EU-SPI Logo" id="logoEUSPI">
+        <button class="nav-toggle" aria-label="Open navigation">☰</button>
+        <nav id="main-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="region-page.html?region=AT11">Regions</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section id="dashboard">
+        <div id="region-map">
+            <div id="map"></div>
+        </div>
+        <div id="region-name">
+            <div id="name-and-flag">
+                <img id="countryFlag" style="height: 2.625rem;"
+                    src="https://raw.githubusercontent.com/hampusborgos/country-flags/refs/heads/main/svg/es.svg">
+                <select class="region-select" id="regionName"></select>
+            </div>
+            <div id="nuts-id">
+                <p id="nuts-id-title">NUTS ID:</p>
+                <p id="nutsId">ES52</p>
+            </div>
+        </div>
+        <div id="key-values-section">
+            <div class="line-break"></div>
+            <div id="key-values">
+                <p id="euspi-value"><strong>EU-SPI:</strong> 65.4 (101/240)</p>
+                <p id="gdp-value"><strong>GDPpc:</strong> 23.098 (98/240)</p>
+                <p id="pop-value"><strong>Population:</strong> 5.524.071 (30/240)</p>
+            </div>
+            <div class="line-break"></div>
+        </div>
+        <div id="spi-peers" class="peer-section">
+            <h2>Peer regions by <span style="background-color: #D7003D80;">Social Progress</span></h2>
+            <div class="peer-display">
+                <button id="SPI1" class="peer-button"></button>
+                <button id="SPI2" class="peer-button"></button>
+                <button id="SPI3" class="peer-button"></button>
+            </div>
+            <div class="peer-display">
+                <button id="SPI4" class="peer-button"></button>
+                <button id="SPI5" class="peer-button"></button>
+            </div>
+        </div>
+        <div id="gdp-peers" class="peer-section">
+            <h2 id="gdp-peers">Peer Regions by <span style="background-color: #00A17480;">GDP</span></h2>
+            <div class="peer-display">
+                <button id="GDP1" class="peer-button"></button>
+                <button id="GDP2" class="peer-button"></button>
+                <button id="GDP3" class="peer-button"></button>
+            </div>
+            <div class="peer-display">
+                <button id="GDP4" class="peer-button"></button>
+                <button id="GDP5" class="peer-button"></button>
+            </div>
+        </div>
+    </section>
+    <section id="gdp-spi-overview">
+        <div id="gdp-spi-overview-title">
+            <h1 id="performance-vs-economic-level">Strong Social Progress for its economic level</h1>
+            <div class="line-break"></div>
+        </div>
+        <div id="positive-spi" class="spi-overview">
+            <img src="assets/trend-arrow.svg">
+            <ul>
+                <li>Performing better than its economic peers on
+                    <ul id="top3-list"></ul>
+                </li>
+            </ul>
+        </div>
+        <div id="negative-spi" class="spi-overview">
+            <ul>
+                <li>Performing worse than its economic peers on
+                    <ul id="bottom3-list"></ul>
+                </li>
+            </ul>
+            <img src="assets/trend-arrow.svg">
+        </div>
+    </section>
+    <section id="comparison-charts">
+        <div id="comparison-charts-title">
+            <h1>Deep dive to the EU-SPI components</h1>
+            <div class="line-break"></div>
+        </div>
+        <aside id="chart-menu">
+            <button id="spiderChartButton" class="selected">Spider Chart</button>
+            <button id="barChartButton">Bar Chart</button>
+        </aside>
+        <div id="chartContainer">
+            <div id="spiderChart"></div>
+            <div id="barChart"></div>
+        </div>
+    </section>
+    <section id="factor-overview">
+        <div id="factor-overview-title">
+            <h1>A more detailed look at social progress</h1>
+            <div class="line-break"></div>
+            <p>Click on any of the four factors for more information</p>
+        </div>
+        <div id="factor-content">
+            <div id="factor-selection">
+                <button class="factor-button selection" data-factor="F1">
+                    <img src="assets/health-icon.svg">
+                </button>
+                <button class="factor-button" data-factor="F2">
+                    <img src="assets/housing-icon.svg">
+                </button>
+                <button class="factor-button" data-factor="F3">
+                    <img src="assets/environment-icon.svg">
+                </button>
+                <button class="factor-button" data-factor="F4">
+                    <img src="assets/education-icon.svg">
+                </button>
+            </div>
+            <div id="graph-control-factor">
+                <div id="factor-graph"></div>
+                <aside id="control-factor">
+                    <div id="factor-and-components">
+                        <h2 id="factor-title">Health</h2>
+                        <ul id="factor-components">
+                            <li>Nutrition and basic medical care</li>
+                            <li>Health and wellness</li>
+                        </ul>
+                    </div>
+                    <div id="factor-compare-region">
+                        <p>Add a region to compare:</p>
+                        <select class="region-select" id="factor-region-select"></select>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+    <section id="pdps">
+        <div id="pdps-title">
+            <h1>Understand where change matters most</h1>
+            <div class="line-break"></div>
+            <p>The sharp jumps mark a <strong>tipping point</strong>: above this level of a component, regions are much
+                more likely to
+                belong to the <strong>core</strong></p>
+            <p>Your region's value is marked with a dashed line—the closer it is to the tipping point, the more critical
+                change is to cluster membership.</p>
+        </div>
+        <div id="carousel-pdps">
+            <div id="prev-page">
+                <div id="pdp-prev"></div>
+                <button id="pdp-prev-button">
+                    <img src="assets/navigation-left.svg" alt="Previous">
+                </button>
+
+            </div>
+            <div id="pdp-now"></div>
+            <div id="next-page">
+                <div id="pdp-next"></div>
+                <button id="pdp-next-button">
+                    <img src="assets/navigation-right.svg" alt="Next">
+                </button>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <nav id="nav-footer">
+            <h1>EU-SPI Interactive Tools</h1>
+            <ul>
+                <li><h2><a href="index.html">Home</a></h2></li>
+                <li><h2><a href="region-page.html?region=AT11">Regional data</a></h2></li>
+                <li><h2><a href="about.html">About this page</a></h2></li>
+            </ul>
+        </nav>
+        <div id="data-sources">
+            <h1>Data sources</h1>
+            <ul>
+                <li>EU-SPI data attributed to the European Commission. Original data can be found <a
+                        href="https://ec.europa.eu/regional_policy/information-sources/maps/social-progress/2020_en"
+                        target="_blank">here</a>
+                    under CC BY 4.0.</li>
+                <li>Geographical data attributed to GISCO. Original data can be found <a
+                        href="https://ec.europa.eu/eurostat/web/gisco/geodata/statistical-units/territorial-units-statistics"
+                        target="_blank">here</a>
+                    under CC BY 4.0.</li>
+                <li>GDP data attributed to EUROSTAT. Original data can be found <a
+                        href="https://ec.europa.eu/eurostat/databrowser/bookmark/fcac5775-8bd4-4885-ae67-472ae4924f82?lang=en"
+                        target="_blank">here </a>
+                    under CC BT 4.0.</li>
+            </ul>
+        </div>
+    </footer>
+</body>
+
+</html>

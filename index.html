@@ -42,10 +42,11 @@
 <body style="margin: 0">
     <header role="banner">
         <img src="assets/logo-euspi.svg" alt="EU-SPI Logo" id="logoEUSPI">
-        <nav>
+        <button class="nav-toggle" aria-label="Open navigation">☰</button>
+        <nav id="main-nav">
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="clustering.html">Regions</a></li>
+                <li><a href="region-page.html?region=AT11">Regions</a></li>
                 <li><a href="about.html">About</a></li>
             </ul>
         </nav>
@@ -55,19 +56,21 @@
             <img src="assets/bg-image.jpg">
         </div>
         <div id="hero-content">
+            <img src="assets/vector-hero-top-mobile.svg" id="vector1-mobile" class="vector-mobile">
             <img src="assets/vector-hero-top.svg" id="vector1" class="vector">
             <div id="hero-text">
-                <h1>EU–SPI Interactive Tools</h1>
+                <h1>EU-SPI Interactive Tools</h1>
                 <p>
                     Create <strong>data-driven</strong> decisions. Go beyond GDP by focusing on social progress.
                     For <strong>public policy makers</strong>, <strong>stakeholders</strong> and
                     <strong>researchers</strong>.
                 </p>
-                <button class="buttonCTA">Get Started</button>
+                <button class="buttonCTA" id="get-started">Get Started</button>
             </div>
             <div id="heroBuffer"></div>
 
             <img src="assets/vector-hero-bot.svg" id="vector2" class="vector">
+            <img src="assets/vector-hero-bot-mobile.svg" id="vector2-mobile" class="vector-mobile">
         </div>
     </section>
     <section id="description">
@@ -78,7 +81,8 @@
                 <p>
                     In this page you will find various interactive tools that
                     use the <strong>European Social Porgress Index</strong> from
-                    the European Commission. This is ther result of a published paper
+                    the European Commission. This is ther result of a <a
+                        href="https://doi.org/10.38191/iirr-jorr.25.012" target="_blank">published paper</a>
                     authored by Albert Busca and Albert Carreras.
                 </p>
             </div>
@@ -90,13 +94,20 @@
         </div>
         <div id="map-and-control">
             <div id="map"></div>
+            <div id="about-map" class="hidden">
+                <h1>About the Map</h1>
+                <ul>
+                    <li>Select a region by clicking on it on the map</li>
+                    <li>Change the variable to display from the drop-down menu</li>
+                    <li>Click on the button at the bottom to discover detailed information about the selected region
+                    </li>
+                </ul>
+                <button id="hide-map">Okay</button>
+            </div>
             <aside id="control-bar">
                 <div id="button-panel">
-                    <button>
+                    <button id="info-map-button">
                         <img src="assets/info-button.svg">
-                    </button>
-                    <button>
-                        <img src="assets/close-button.svg">
                     </button>
                 </div>
                 <div id="region-graph">
@@ -158,69 +169,121 @@
         <div id="distribution-plot">
             <h1>Visualising the disparities within and between clusters</h1>
             <div class="line-break"></div>
-            <p class="subtitle">Distribution of [Component] by cluster</p>
-            <div class="chart-box">
+            <p id="boxPlotTitle" class="subtitle">Distribution of Health (Factor 1) by cluster</p>
+            <div class="chart-box" id="box-plot-chart-box">
                 <div id="boxPlotCluster"></div>
                 <aside id="box-plot-controls">
-                <select id="propertySelectBoxPlot">
-                    <optgroup label="Factors">
-                        <option value="ML1">Health (Factor 1)</option>
-                        <option value="ML2">Freedom and Housing (Factor 2)</option>
-                        <option value="ML3">Basic Education (Factor 3)</option>
-                        <option value="ML4">Socio-environmental Quality (Factor 4)</option>
-                    </optgroup>
-                    <optgroup label="Components">
-                        <option value="Nutrition and Basic Medical Care">Nutrition and Basic Medical Care</option>
-                        <option value="Water and Sanitation">Water and Sanitation</option>
-                        <option value="Shelter">Shelter</option>
-                        <option value="Personal Security">Personal Security</option>
-                        <option value="Access to Basic Knowledge">Access to Basic Knowledge</option>
-                        <option value="Access to ICT">Access to ICT</option>
-                        <option value="Health and Wellness">Health and Wellness</option>
-                        <option value="Environmental Quality">Environmental Quality</option>
-                        <option value="Personal Rights">Personal Rights</option>
-                        <option value="Personal Freedom and Choice">Personal Freedom and Choice</option>
-                        <option value="Tolerance and Inclusion">Tolerance and Inclusion</option>
-                        <option value="Access to Advanced Education">Access to Advanced Education</option>
-                    </optgroup>
-                </select>
-                <fieldset>
-                    <p style="text-align: center;">Highlighted Regions</p>
-                    <div style="display: flex;">
-                        <div class="legendBox" style="background-color: #0B39A2;"></div>
-                        <select id="highlightReg1" style="width: 85%;">
-                            <option value="">Select a region</option>
-                        </select>
-                    </div>
-                    <div style="display: flex;">
-                        <div class="legendBox" style="background-color: #E6B800;"></div>
-                        <select id="highlightReg2" style="width: 85%;">
-                            <option value="">Select a region</option>
-                        </select>
-                    </div>
-                    <div style="display: flex;">
-                        <div class="legendBox" style="background-color: #00A174;"></div>
-                        <select id="highlightReg3" style="width: 85%;">
-                            <option value="">Select a region</option>
-                        </select>
-                    </div>
-                    <div style="display: flex;">
-                        <div class="legendBox" style="background-color: #FF8133;"></div>
-                        <select id="highlightReg4" style="width: 85%;">
-                            <option value="">Select a region</option>
-                        </select>
-                    </div>
-                    <div style="display: flex;">
-                        <div class="legendBox" style="background-color: #D7003D;"></div>
-                        <select id="highlightReg5" style="width: 85%;">
-                            <option value="">Select a region</option>
-                        </select>
-                    </div>
-                </fieldset>
-            </aside>
+                    <select id="propertySelectBoxPlot">
+                        <optgroup label="Factors">
+                            <option value="ML1">Health (Factor 1)</option>
+                            <option value="ML2">Freedom and Housing (Factor 2)</option>
+                            <option value="ML3">Basic Education (Factor 3)</option>
+                            <option value="ML4">Socio-environmental Quality (Factor 4)</option>
+                        </optgroup>
+                        <optgroup label="Components">
+                            <option value="Nutrition and Basic Medical Care">Nutrition and Basic Medical Care</option>
+                            <option value="Water and Sanitation">Water and Sanitation</option>
+                            <option value="Shelter">Shelter</option>
+                            <option value="Personal Security">Personal Security</option>
+                            <option value="Access to Basic Knowledge">Access to Basic Knowledge</option>
+                            <option value="Access to ICT">Access to ICT</option>
+                            <option value="Health and Wellness">Health and Wellness</option>
+                            <option value="Environmental Quality">Environmental Quality</option>
+                            <option value="Personal Rights">Personal Rights</option>
+                            <option value="Personal Freedom and Choice">Personal Freedom and Choice</option>
+                            <option value="Tolerance and Inclusion">Tolerance and Inclusion</option>
+                            <option value="Access to Advanced Education">Access to Advanced Education</option>
+                        </optgroup>
+                    </select>
+                    <fieldset id="highlighted-regions">
+                        <p style="text-align: center;">Highlighted Regions</p>
+                        <div style="display: flex;">
+                            <div class="legendBox" style="background-color: #0B39A2;"></div>
+                            <select id="highlightReg1" style="width: 85%;">
+                                <option value="">Select a region</option>
+                            </select>
+                        </div>
+                        <div style="display: flex;">
+                            <div class="legendBox" style="background-color: #E6B800;"></div>
+                            <select id="highlightReg2" style="width: 85%;">
+                                <option value="">Select a region</option>
+                            </select>
+                        </div>
+                        <div style="display: flex;">
+                            <div class="legendBox" style="background-color: #00A174;"></div>
+                            <select id="highlightReg3" style="width: 85%;">
+                                <option value="">Select a region</option>
+                            </select>
+                        </div>
+                        <div style="display: flex;">
+                            <div class="legendBox" style="background-color: #FF8133;"></div>
+                            <select id="highlightReg4" style="width: 85%;">
+                                <option value="">Select a region</option>
+                            </select>
+                        </div>
+                        <div style="display: flex;">
+                            <div class="legendBox" style="background-color: #D7003D;"></div>
+                            <select id="highlightReg5" style="width: 85%;">
+                                <option value="">Select a region</option>
+                            </select>
+                        </div>
+                    </fieldset>
+                </aside>
             </div>
         </div>
     </section>
+    <section id="region-data-cta">
+        <div id="region-bg-img">
+            <img src="assets/region-image.jpg">
+        </div>
+        <div id="region-vector-frame">
+            <img src="assets/vector-region-cta.svg" id="vector-region-cta">
+        </div>
+        <div id="regional-content-frame">
+            <div id="regional-cta-content">
+                <h1>Regional data</h1>
+                <ul>
+                    <li>Detailed insights</li>
+                    <li>Compare regions</li>
+                    <li>Understand patterns</li>
+                </ul>
+                <button class="buttonCTA" id="regional-data-cta">Go to regional data</button>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <nav id="nav-footer">
+            <h1>EU-SPI Interactive Tools</h1>
+            <ul>
+                <li>
+                    <h2><a href="index.html">Home</a></h2>
+                </li>
+                <li>
+                    <h2><a href="region-page.html?region=AT11">Regional data</a></h2>
+                </li>
+                <li>
+                    <h2><a href="about.html">About this page</a></h2>
+                </li>
+            </ul>
+        </nav>
+        <div id="data-sources">
+            <h1>Data sources</h1>
+            <ul>
+                <li>EU-SPI data attributed to the European Commission. Original data can be found <a
+                        href="https://ec.europa.eu/regional_policy/information-sources/maps/social-progress/2020_en"
+                        target="_blank">here</a>
+                    under CC BY 4.0.</li>
+                <li>Geographical data attributed to GISCO. Original data can be found <a
+                        href="https://ec.europa.eu/eurostat/web/gisco/geodata/statistical-units/territorial-units-statistics"
+                        target="_blank">here</a>
+                    under CC BY 4.0.</li>
+                <li>GDP data attributed to EUROSTAT. Original data can be found <a
+                        href="https://ec.europa.eu/eurostat/databrowser/bookmark/fcac5775-8bd4-4885-ae67-472ae4924f82?lang=en"
+                        target="_blank">here </a>
+                    under CC BT 4.0.</li>
+            </ul>
+        </div>
+    </footer>
 </body>
 
 </html>

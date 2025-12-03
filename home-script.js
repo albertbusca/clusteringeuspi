@@ -151,7 +151,10 @@ function onEachFeature(feature, layer) {
         // update Link
         document.getElementById('regionLink').textContent = `Detailed information for ${feature.properties.NUTS_ID1}`;
         document.getElementById('regionLink').addEventListener('click', function () {
-            window.location.href = 'regionPage3.html?region=' + encodeURIComponent(feature.properties.NUTS_ID1);
+            window.location.href = 'region-page.html?region=' + encodeURIComponent(feature.properties.NUTS_ID1);
+        });
+        document.getElementById('regional-data-cta').addEventListener('click', () => {
+            window.location.href = 'region-page.html?region=' + encodeURIComponent(feature.properties.NUTS_ID1);
         });
     });
 }
@@ -240,14 +243,11 @@ fetch('data/globalmap.geojson')
     });
 
 document.getElementById('regionLink').addEventListener('click', function () {
-    window.location.href = 'regionPage3.html?region=AT11'
+    window.location.href = 'region-page.html?region=AT11'
 })
-
-/*
-document.getElementById('buttonRegCTA').addEventListener('click', function () {
-    window.location.href = 'regionPage3.html?region=AT11'
-})
-*/
+document.getElementById('regional-data-cta').addEventListener('click', () => {
+    window.location.href = 'region-page.html?region=AT11';
+});
 
 fetchNutsData().then(data => {
     const firstFeature = data.features[0];
@@ -375,12 +375,12 @@ function createBoxPlot(property, propertyName) {
             font: { family: 'Source Sans 3' },
             dragmode: false,
             showlegend: false,
-            responsive: true,
         };
 
         const config = {
             staticPlot: false,
             autosize: true,
+            responsive: true,
             displayModeBar: false,
         };
 
@@ -543,7 +543,6 @@ function adjustHeight() {
 
 // Update on window resize
 window.addEventListener("resize", () => {
-    //adjustHeight();
     Plotly.Plots.resize('barChartCluster');
     Plotly.Plots.resize('boxPlotCluster');
     Plotly.Plots.resize('barChartRegion');
@@ -554,14 +553,29 @@ const header = document.querySelector("header");
 const threshold = 10;
 
 window.addEventListener("scroll", () => {
-  const currentY = window.scrollY;
-  if (Math.abs(currentY - lastScrollY) < threshold) return;
+    const currentY = window.scrollY;
+    if (Math.abs(currentY - lastScrollY) < threshold) return;
 
-  if (currentY > lastScrollY) {
-    header.classList.add("hide");
-  } else {
-    header.classList.remove("hide");
-  }
+    if (currentY > lastScrollY) {
+        header.classList.add("hide");
+    } else {
+        header.classList.remove("hide");
+    }
 
-  lastScrollY = currentY;
+    lastScrollY = currentY;
 });
+
+document.getElementById('info-map-button').addEventListener('click', () => {
+    document.getElementById('about-map').classList.remove('hidden');
+});
+
+document.getElementById('about-map').querySelector('button').addEventListener('click', () => {
+    document.getElementById('about-map').classList.add('hidden');
+});
+
+document.getElementById('get-started').addEventListener('click', () => {
+    document.getElementById('description').scrollIntoView({ behavior: 'smooth' });
+});
+
+
+
